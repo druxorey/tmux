@@ -71,7 +71,7 @@ get_tmux_ram_usage()
       else
         pids="$(get_cpids_linux "$pid" | tr '\n' ',')"
       fi
-      total_mem_kb="$(ps -o rss= -p "$pids" | paste -sd+ | bc)"
+      total_mem_kb="$(ps -o rss= -p "$pids" | awk '!seen[$0]++' | paste -sd+ | bc)"
       ;;
 
     Darwin)
